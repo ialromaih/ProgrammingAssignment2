@@ -13,7 +13,7 @@ makeCacheMatrix <- function(x = matrix()) {
      setinv <- function(inv) x_inv <<- inv
      getinv <- function() x_inv
      list(set=set, get=get,
-          setinv = setinv
+          setinv = setinv,
           getinv = getinv)
 }
 
@@ -22,12 +22,13 @@ makeCacheMatrix <- function(x = matrix()) {
 ## The function fetches the cache first to reuse results from previous runs, otherwise, the inverse is evaluated.
 
 cacheSolve <- function(x, ...) {
+        #x_df <- as.data.frame(x)
         x_inv <- x$getinv()
         if(!is.null(x_inv)){
                 return(x_inv)       
         }
         data <- x$get()
-        x_inv <- solve(x,...)
+        x_inv <- solve(data,...)
         x$setinv(x_inv)
         x_inv
         ## Return a matrix that is the inverse of 'x'
